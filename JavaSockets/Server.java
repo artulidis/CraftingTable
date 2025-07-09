@@ -48,7 +48,7 @@ public class Server extends Thread {
                 DataInputStream dataInputStream = new DataInputStream(connectedServerSocket.getInputStream());
                 DataOutputStream dataOutputStream = new DataOutputStream(connectedServerSocket.getOutputStream());
 
-                dataOutputStream.writeUTF("Connected on port: " + connectedServerSocket.getLocalPort());
+                dataOutputStream.writeUTF("Connected on port " + connectedServerSocket.getLocalPort());
                 dataOutputStream.writeUTF(menu());
 
                 int operation = dataInputStream.readInt();
@@ -57,24 +57,28 @@ public class Server extends Thread {
 
                 switch(operation) {
                     case 0:
-                        dataOutputStream.writeUTF("Closing connection on port: " + connectedServerSocket.getLocalPort());
+                        dataOutputStream.writeUTF("Closing connection on port " + connectedServerSocket.getLocalPort());
                         connectedServerSocket.close();
                         break;
                     
                     case 1:
                         dataOutputStream.writeInt(add(operand1, operand2));
+                        // dataOutputStream.writeUTF("Add Operation");
                         break;
 
                     case 2:
                         dataOutputStream.writeInt(sub(operand1, operand2));
+                        // dataOutputStream.writeUTF("Subtract Operation");
                         break;
 
                     case 3:
                         dataOutputStream.writeInt(mul(operand1, operand2));
+                        // dataOutputStream.writeUTF("Multiply Operation");
                         break;
 
                     case 4:
                         dataOutputStream.writeDouble(div(operand1, operand2));
+                        // dataOutputStream.writeUTF("Divide Operation");
                         break;
                 }
             }

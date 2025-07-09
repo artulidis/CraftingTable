@@ -17,7 +17,7 @@ Client:
 - Finally, try to close the connection
  */
 
- class Client {
+ public class Client {
     public static void main(String args[]) {
         Socket client = null;
         String host = args[0];
@@ -32,12 +32,18 @@ Client:
             Scanner userInput = new Scanner(System.in);
 
             System.out.println("Server says: " + dataInputStream.readUTF());
+            
+            // Print menu
+            System.out.println(dataInputStream.readUTF());
 
             int operation, operand1, operand2;
             
-            do {
+            while(true) {
                 System.out.print("Enter operation: ");
                 operation = userInput.nextInt();
+                
+                if(operation == 0) break;
+                
                 System.out.print("Enter first operand: ");
                 operand1 = userInput.nextInt();
                 System.out.print("Enter second operand: ");
@@ -50,9 +56,8 @@ Client:
                 System.out.println("Result: " + dataInputStream.readInt());
             }
 
-            while(operation != 0);
-
             userInput.close();
+            client.close();
 
         }
 
