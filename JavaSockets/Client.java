@@ -3,19 +3,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.NoSuchElementException;
-
-/* 
-Client:
-- Stateless class
-- Define socket, host, and port
-- Try to initialize socket, data streams, input scanner, and print out server connection message
-- Scan for the math operation, and the two operands
-- Send scanned inputs to server
-- Print server result
-- Look for IOException, NoSuchElementException
-- Finally, try to close the connection
- */
 
  public class Client {
     public static void main(String args[]) {
@@ -41,9 +28,9 @@ Client:
             while(true) {
                 System.out.print("Enter operation: ");
                 operation = userInput.nextInt();
-                
+
                 if(operation == 0) break;
-                
+
                 System.out.print("Enter first operand: ");
                 operand1 = userInput.nextInt();
                 System.out.print("Enter second operand: ");
@@ -56,9 +43,14 @@ Client:
                 System.out.println("Result: " + dataInputStream.readInt());
             }
 
+            // Send final message to server before exiting gracefully
+            dataOutputStream.writeInt(0);
+            dataOutputStream.writeInt(0);
+            dataOutputStream.writeInt(0);
+
             userInput.close();
             client.close();
-
+            System.out.println("Connection closed gracefully");
         }
 
         catch(IOException e) {
