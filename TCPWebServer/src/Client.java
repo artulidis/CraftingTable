@@ -1,0 +1,70 @@
+package TCPWebServer.src;
+
+/*
+ Client class implements Runnable (Thread) interface with a Run method. Client Socket, and request/redirect HashMaps are initialized
+ 
+ Request map stores keys/values for client requests
+ Redirect map stores keys that need to be redirected to corresponding values
+
+ Constructor initializes the passed-in client socket, and initializes request/redirect HashMaps
+ Constructor initializes redirect map for HTTP 301 simulation
+
+ Run method simply parses a request, sends a response, and closes the socket connection
+ Catch IOException errors
+
+
+
+ Request parser method is created that parses client requests and inserts all request fields into the request map
+ Throws IOException error if client socket is not present and inputStream is not available
+ A BufferedReader is connected to the client socket's input stream and reads it its request data
+
+ Read the top request line of the client. ex: GET/index.html HTTP/1.1
+
+ Start parsing the request line if it exists
+ Capture member Strings of the top request line, separated by spaces, into an array
+ Extract the relevant information from the top line of the request. Method, Resource URL, and Protocol
+ Add the Method, Resource, and Protocol to the request HashMap
+ Read the next line of the client request header
+ Loop while the request header still has lines to read
+ Continue reading and storing the values of each request field into the request HashMap
+ 
+ To store values of the request in the map, split the request field into its key/value pair:
+ Put the request field key and value into the request map,
+ Read the next line of the request
+
+
+
+ Send response method is created that sends appropriate response based on the client request
+ 
+ If the URL requested is inside of the redirect HashMap, the client is sent a HTTP 301 error redirect response
+ The client is sent to a new URL location.
+
+ If the URL requested is not inside of the redirect HashMap and does not exist, an HTTP 404 error response is sent
+ If the URL request exists, an HTTP 200 OK response is sent
+
+ Method throws IOException method if outStream, fileStream, or bufInputStream is closed or does not exist while being used
+
+ A DataOutputStream is created
+ 
+ File path of the file requested by the client connection is captured and the requested File is opened
+ If the requested file is in the redirect HashMap, send the client an HTTP 301 response
+ Client is redirected to the new file address
+
+ If the file requested does not exist, send the client an HTTP 404 response and a 404 webpage
+ (Experiment with \r and \r\n)
+ Send the HTTP 404 response to thhe client using the UTF-8 encoding
+
+ If a file is not in the redirect HashMap and exists, send an HTTP 200 response and serve the file
+ Open a file input stream to read data from the file
+ Get the MIME file type of the file that the client is requesting
+ Create a BufferedInputStream to read data from the fileStream
+ Create an array of bytes the same length of the file requested to hold the file data bytes
+ Send the header of the HTTP 200 response
+ Read in the data from the file requested into the bytes array
+ Send the hdata contained by the bytes array to the client connection and flush the output stream
+ Close the output stream
+ */
+
+public class Client {
+    
+}
